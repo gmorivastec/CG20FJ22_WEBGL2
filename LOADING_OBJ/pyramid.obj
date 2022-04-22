@@ -2,15 +2,24 @@
 #
 g Object001
 
+# obj is a format that contains a model
+
+# VERTICES 
+# start with v 
+# have x, y, z
+
 v  0  0  0
 v  1  0  0
 v  1  1  0
 v  0  1  0
 v  0.5  0.5  1.6
 
-f  5  2  3
-f  4  5  3
-f  6  3  2
-f  5  6  2
-f  4  6  5
-f  6  4  3
+# faces (f)
+# made up of 3 vertices
+
+f  4  1  2
+f  3  4  2
+f  5  2  1
+f  4  5  1
+f  3  5  4
+f  5  3  2
