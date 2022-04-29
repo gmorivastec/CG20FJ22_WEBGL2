@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>USING THE THREEJS OBJ LOADER</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    </head>
+
+    <body>
+
+        <!-- SUPER IMPORTANT: -->
+        <!-- * use a fairly recent version of Chrome or Firefox (probably works on edge / safari)-->
+
+        <!-- using import maps you can import code as you would in other contexts -->
+        <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules -->
+        <script type="importmap">
+            {
+                "imports" : {
+                    "three": "./three.module.js"
+                }
+            }
+        </script>
+
+        <script type="module">
+
+            import * as THREE from 'three';
+            import { OBJLoader} from './jsm/loaders/OBJLoader.js';
+
+            // declare variables we will be using
+            let container, camera, scene, renderer, obj;
+
+            init();
+            animate();
+
+            function init() {
+
+                // this guy will be in charge of 
+                // - setting up the scene
+                // - load model 
+                // - add model to scene
+
+                // DOM - if you want to manipulate html structure
+                // with javascript  
+                container = document.createElement('div');
+                document.body.appendChild(container);
+
+                // REVIEW WHAT THE RENDER VOLUME IS 
+                // AND ITS RELATIONSHIP TO FRUSTUM FOR YOUR EXAM
+                camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+                camera.position.z = 250;
+
+                // setup scene 
+                scene = new THREE.Scene();
+
+                // this is new.
+                // LIGHT! 
+                // we can as many as we wish
+                const ambient = new THREE.AmbientLight(0xcccccc, 0.4);
+                scene.add(ambient);
+
+                const point = new THREE.PointLight(0xffffff, 0.8);
+                camera.add(point);
+
+                scene.add(camera);
+
+                // load the module into obj
+                /*
+                loader.load('ninja/ninjaHead_Low.obj', 
+                    function(obj) {
+
+                    },
+                    function(xhr) {},
+                    function() {}
+                );*/
+            }
+
+            function animate() {}
+        </script>
+    </body>
+</html>
