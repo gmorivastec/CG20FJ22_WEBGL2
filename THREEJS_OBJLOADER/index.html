@@ -26,7 +26,7 @@
             import { OBJLoader} from './jsm/loaders/OBJLoader.js';
 
             // declare variables we will be using
-            let container, camera, scene, renderer, obj;
+            let container, camera, scene, renderer, object;
 
             init();
             animate();
@@ -63,17 +63,69 @@
                 scene.add(camera);
 
                 // load the module into obj
-                /*
+                // to use de OBJLoader I need an loading manager 
+                const manager = new THREE.LoadingManager(function () {
+
+                    object.position.y = - 95;
+                    scene.add(object);
+                });
+
+                const loader = new OBJLoader(manager);
+                
                 loader.load('ninja/ninjaHead_Low.obj', 
                     function(obj) {
-
+                        // first callback 
+                        // when the loading is done
+                        object = obj;
                     },
-                    function(xhr) {},
-                    function() {}
-                );*/
+                    function(xhr) {
+
+                        // this one reports on progress
+                        const percentage = xhr.loaded / xhr.total * 100;
+                        console.log("LOADING: " + percentage + " %");
+                    },
+                    function() {
+
+                        // if an error happens this runs
+                        alert("AN ERROR HAPPENED, I'M SCARED.");
+                    }
+                );
+
+                renderer = new THREE.WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                window.addEventListener('resize', windowResize);
             }
 
-            function animate() {}
+            function animate() {
+
+                requestAnimationFrame(animate);
+                render();
+            }
+
+            function render() {
+
+                camera.lookAt(scene.position);
+                renderer.render(scene, camera);
+            }
+
+            function windowResize() {
+                
+                // upload aspect ratio
+                camera.aspect = window.innerWidth / innerHeight;
+
+                // 2 types of projection
+                // 1. orthographic
+                // 2. perspective 
+                // 100% going to be on your exam
+
+                // RENDER VOLUME - 100% on your exam
+                // clipping planes
+                // frustum 
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
         </script>
     </body>
 </html>
